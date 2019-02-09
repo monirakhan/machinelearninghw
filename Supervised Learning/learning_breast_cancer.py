@@ -4,6 +4,8 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import svm
+from sklearn.tree import export_graphviz
+import pydotplus
 from util import get_data, plot_data
 import pandas as pd
 import numpy as np
@@ -36,8 +38,11 @@ def dtl_without_pruning():
     training_sizes = [.01, .05, .1, .15, .20, .25, .30, .35, .40, .45, .50, .55, .65, .70, .75, .80, .85, .90]
     insample = []
     outofsample = []
+    dtl = DecisionTreeClassifier(max_depth=10, max_features=9)
+    # dtl.fit(trainX, trainY)
+    # dot_data = StringIO()
+    # export_graphviz(dtl, out_file='dot_data_without_pruning')
     for size in training_sizes:
-        dtl = DecisionTreeClassifier(max_depth=10, max_features=9)
         trainingX = split_data(trainX, size)
         trainingY = split_data(trainY, size)
         dtl.fit(trainingX,trainingY)
@@ -53,7 +58,7 @@ def dtl_without_pruning():
     dataList["In Sample"] = insample_error
     dataList["Out of Sample"] = outofsample_error
     plot_data(dataList, "DTLearner Accuracy without Pruning (Breast Cancer Dataset)", "Training Size", "Score")
-    plt.ylim(0,1.1)
+    plt.ylim(0.3,1.1)
     plt.savefig("Graphs/dtl_wo_pruning-breast-cancer.png")
 
 #Decision Tree with pruning
@@ -65,10 +70,12 @@ def dtl():
     trainX, trainY, testX, testY = getInfo("Data/breast_cancer.csv")
     grid_search = GridSearchCV(dtl, param_grid= parameter_grid,
         cv= 5)
-
     grid_search.fit(trainX, trainY)
     best = grid_search.best_estimator_
-    print(best.get_params())
+    #best.fit(trainX, trainY)
+    # dot_data = StringIO()
+    # export_graphviz(best, out_file='dot_data')
+    # print(best.get_params())
     training_sizes = [.01, .05, .1, .15, .20, .25, .30, .35, .40, .45, .50, .55, .65, .70, .75, .80, .85, .90]
     insample = []
     outofsample = []
@@ -87,8 +94,8 @@ def dtl():
     outofsample_error = pd.DataFrame(outofsample, index=training_sizes)
     dataList["In Sample"] = insample_error
     dataList["Out of Sample"] = outofsample_error
-    plot_data(dataList, "DTLearner Accuracy (Breast Cancer Dataset)", "Training Size", "Score")
-    plt.ylim(0,1.1)
+    plot_data(dataList, "DTLearner Accuracy with Pruning(Breast Cancer Dataset)", "Training Size", "Score")
+    plt.ylim(0.3,1.1)
     plt.savefig("Graphs/dtl_score-breast-cancer.png")
     #return dtl.predict(testX)
 def dtl_max_depth():

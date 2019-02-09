@@ -4,6 +4,9 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import svm
+from sklearn.tree import export_graphviz
+from sklearn.model_selection import learning_curve
+import pydotplus
 from util import get_data, plot_data
 import pandas as pd
 import numpy as np
@@ -35,8 +38,8 @@ def dtl_without_pruning():
     training_sizes = [.10, .20, .30, .40, .50, .60, .70, .80, .90]
     insample = []
     outofsample = []
+    dtl = DecisionTreeClassifier(max_depth=150, max_features=36)
     for size in training_sizes:
-        dtl = DecisionTreeClassifier(max_depth=36, max_features=36)
         trainingX = split_data(trainX, size)
         trainingY = split_data(trainY, size)
         dtl.fit(trainingX,trainingY)
@@ -46,6 +49,7 @@ def dtl_without_pruning():
         print("In Sample Accuraccy: %0.2f" % (insample_score))
         insample.append(insample_score)
         outofsample.append(outofsample_score)
+    export_graphviz(dtl, out_file='dot_data_chess_unpruned')
     print(dtl.get_params())
     dataList = pd.DataFrame(index=training_sizes, columns=["In Sample", "Out of Sample"])
     insample_error = pd.DataFrame(insample, index=training_sizes)
@@ -53,13 +57,13 @@ def dtl_without_pruning():
     dataList["In Sample"] = insample_error
     dataList["Out of Sample"] = outofsample_error
     plot_data(dataList, "DTLearner Accuracy without Pruning (Chess Dataset)", "Training Size", "Score")
-    plt.ylim(0.6,1)
+    plt.ylim(0.8,1.01)
     plt.savefig("Graphs/dtl_wo_pruning-chess.png")
 
 #Decision Tree with pruning
 def dtl():
     parameter_grid = {'max_depth': range(1, 11),
-                      'max_features': range(1, 20)}
+                      'max_features': range(1, 21)}
     #Mac depth, min samples leaf
     dtl = DecisionTreeClassifier()
     trainX, trainY, testX, testY = getInfo("Data/chess.csv")
@@ -68,6 +72,8 @@ def dtl():
 
     grid_search.fit(trainX, trainY)
     best = grid_search.best_estimator_
+    best.fit(trainX, trainY)
+    export_graphviz(best, out_file='dot_data_chess')
     print(best.get_params())
     training_sizes = [.10, .20, .30, .40, .50, .60, .70, .80, .90]
     insample = []
@@ -88,7 +94,7 @@ def dtl():
     dataList["In Sample"] = insample_error
     dataList["Out of Sample"] = outofsample_error
     plot_data(dataList, "DTLearner Accuracy with Pruning(Chess Game Dataset)", "Training Size", "Score")
-    plt.ylim(0.6,1)
+    plt.ylim(0.8,1.01)
     plt.savefig("Graphs/dtl_score-chess.png")
     #return dtl.predict(testX)
 def dtl_max_depth():
