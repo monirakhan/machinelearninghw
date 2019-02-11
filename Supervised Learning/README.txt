@@ -16,6 +16,7 @@ In order for code to run properly, you must have matplotlib, numpy, sklearn, sci
 
 Running the code with generate all the graphs into the Graph folder that were provided in the analysis and produces print statements in terminal. 
 
+Code can be found at: https://github.com/monirakhan/machinelearninghw
 Data citations:
    1. William H. Wolberg and O.L. Mangasarian: "Multisurface method of 
       pattern separation for medical diagnosis applied to breast cytology", 
