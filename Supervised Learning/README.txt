@@ -1,4 +1,4 @@
-For datasets:
+For datasets in Data folder:
 	Wisconsin Breast Cancer Database ---> learning_breast_cancer.py
 		All the learners methods classifying this dataset are in this file and is easily run by the terminal prompt 'python learning_breast_cancer.py'. Simply uncomment the desired experiment method call in the main function.
 This dataset can be found at: https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
@@ -12,9 +12,9 @@ Analysis was done using the latest version of scikit-learn, a Python machine lea
 	Scikit-learn: Machine Learning in Python, Pedregosa et al., JMLR 12, pp. 		2825-2830, 2011.
 	API design for machine learning software: experiences from the scikit-learn 		project, Buitinck et al., 2013.
 Installation:
-In order for code to run properly, you must have matplotlib, numpy, sklearn, and scipy installed.
+In order for code to run properly, you must have matplotlib, numpy, sklearn, scipy, and graphviz installed. The util.py folder helps to graph. Must be in the directory in order for code to run.
 
-Running the code with generate all the graphs that were provided in the analysis and produces print statements in terminal. All code has comments that describe what the function is testing.
+Running the code with generate all the graphs into the Graph folder that were provided in the analysis and produces print statements in terminal. 
 
 Data citations:
    1. William H. Wolberg and O.L. Mangasarian: "Multisurface method of 
