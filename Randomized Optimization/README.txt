@@ -17,4 +17,4 @@ chess data-set - Knowledge Extraction based on Evolutionary Learning (KEEL) data
 
 ABAGAIL library - https://github.com/pushkar/ABAGAIL
 A lot of the code I used is based on examples present in the ABAGAIL library. 
-To access the code you can visit: 
+To access the code you can visit: https://github.com/monirakhan/machinelearninghw/tree/master/Randomized%20Optimization
