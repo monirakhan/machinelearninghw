@@ -5,4 +5,4 @@ The code is heavily based on https://github.com/cmaron/CS-7641-assignments/tree/
 Run terminal command python run_experiment.py -h to see all your options
 and run python run_experiment.py --plot to plot the results of the experiment.
 
-The code can be found: 
+The code can be found: https://github.com/monirakhan/machinelearninghw/tree/master/Clustering
